@@ -84,9 +84,9 @@ class Load(tk.Frame):
                           bd=10, bg="orange", activebackground="orangered")
         enter.place(relx=0.7, rely=0.1, anchor="center")
 
-        load = tk.Button(self, text="Return to Main", command=lambda: controller.show_page(Title), 
+        ret = tk.Button(self, text="Return to Main", command=lambda: controller.show_page(Title), 
                               bd=10, bg="orange", activebackground="orangered")
-        load.place(relx=0.25, rely=0.6, anchor="center")
+        ret.place(relx=0.25, rely=0.6, anchor="center")
 
         manual_label = tk.Label(self, text="Input Flashcards Manually", fg="purple4", bg="steelblue", font=SMOL_FONT, 
                               height=2, borderwidth="3", relief="groove")
@@ -152,6 +152,9 @@ class Learn(tk.Frame):
         back = tk.Button(self, text="Back", command=self.back,
                               bd=10, bg="orange", activebackground="orangered")
         back.place(relx=0.6, rely=0.5, anchor="center")
+        ret = tk.Button(self, text="Return to Main", command=lambda: controller.show_page(Title), 
+                              bd=10, bg="orange", activebackground="orangered")
+        ret.place(relx=0.25, rely=0.8, anchor="center")
 
     def flip(self):
         pass
@@ -168,6 +171,34 @@ class Learn(tk.Frame):
 class Test(tk.Frame):
     def __init__(self, parent, controller, logic):
         tk.Frame.__init__(self, parent)
+
+        self.card = tk.Label(self, text="Rouxls Kaard", fg="purple4", bg="steelblue", font=SMOL_FONT, 
+                              height=15, width=60, borderwidth="3", relief="groove")
+        self.card.place(relx=0.5, rely=0.2, anchor="center")
+        next_card = tk.Button(self, text="Next", command=self.next,
+                              bd=10, bg="orange", activebackground="orangered")
+        next_card.place(relx=0.3, rely=0.5, anchor="center")
+        back = tk.Button(self, text="Back", command=self.back,
+                              bd=10, bg="orange", activebackground="orangered")
+        back.place(relx=0.7, rely=0.5, anchor="center")
+        reveal = tk.Button(self, text="Reveal", command=self.reveal,
+                              bd=10, bg="orange", activebackground="orangered")
+        reveal.place(relx=0.5, rely=0.5, anchor="center")
+        ret = tk.Button(self, text="Return to Main", command=lambda: controller.show_page(Title), 
+                              bd=10, bg="orange", activebackground="orangered")
+        ret.place(relx=0.25, rely=0.8, anchor="center")
+
+    def reveal(self):
+        pass
+        # Reveal card
+
+    def next(self):
+        pass
+        # Go to next card
+    
+    def back(self):
+        pass
+        # Go to previous card
 
 if __name__ == "__main__":
     app = App()
