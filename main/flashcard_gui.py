@@ -21,9 +21,9 @@ class App(tk.Tk):
 
         # Set up frames dictionary
         self.frames = {}
-        self.PAGES = (Title, Load)
+        self.PAGES = (Title, Load, Select, Learn, Test)
         for page in self.PAGES:
-            frame = page(container, self,logic=self.logic)
+            frame = page(container, self, logic=self.logic)
             frame.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
             self.frames[page] = frame
         
@@ -33,7 +33,6 @@ class App(tk.Tk):
         self.show_page(Title)
   
     def show_page(self, frame):
-        
         self.frames[frame].tkraise()
 
 class Title(tk.Frame):
@@ -48,18 +47,19 @@ class Title(tk.Frame):
         load = tk.Button(self, text="Load Flashcards", command=lambda: controller.show_page(Load), 
                               bd=10, bg="orange", activebackground="orangered")
         load.place(relx=0.25, rely=0.6, anchor="center")
-        start = tk.Button(self, text="Study Flashcards", command=self.test, 
+        self.errl = tk.Label(self, text="", fg="purple4", bg="steelblue", font=SMOL_FONT, 
+                              height=1, borderwidth="2", relief="groove")
+        self.errl.place(relx=0.75, rely=0.5, anchor="center")
+        start = tk.Button(self, text="Study Flashcards", command=lambda: controller.show_page(Select), 
                               bd=10, bg="tomato")
         start.place(relx=0.75, rely=0.6, anchor="center")
-        if self.err:
-            errl = tk.Label(self, text="Enter Flashcard Data Before Studying", fg="purple4", bg="steelblue", font=FONT, 
-                              height=1, borderwidth="2", relief="groove")
-            errl.place(relx=0.75, rely=0.6, anchor="center")
 
 
     def test(self):
-        if (self.logic.DeckSize()) == 0:
-            self.err = True
+        pass
+        # if (self.logic.DeckSize()) == 0:
+        #     self.err1.configure(text="Enter Flashcard Data Before Studying")
+        
 
 class Load(tk.Frame):
     def __init__(self, parent, controller,logic):
@@ -105,6 +105,50 @@ class Load(tk.Frame):
         new_def = self.defin.get(1.0, "end-1c")
         self.defin.delete(1.0, tk.END)
         # Add new term to self.logic
+
+class Select(tk.Frame):
+    def __init__(self, parent, controller, logic):
+        tk.Frame.__init__(self, parent)
+
+        learn = tk.Button(self, text="Learn", command=lambda: controller.show_page(Learn),
+                          bd=20, bg="orange", activebackground="orangered")
+        learn.place(relx=0.5, rely=0.3, anchor="center")
+        test = tk.Button(self, text="Test", command=lambda: controller.show_page(Test),
+                          bd=20, bg="orange", activebackground="orangered")
+        test.place(relx=0.5, rely=0.7, anchor="center")
+
+class Learn(tk.Frame):
+    def __init__(self, parent, controller, logic):
+        tk.Frame.__init__(self, parent)
+
+        self.card = tk.Label(self, text="Rouxls Kaard", fg="purple4", bg="steelblue", font=SMOL_FONT, 
+                              height=15, width=60, borderwidth="3", relief="groove")
+        self.card.place(relx=0.5, rely=0.2, anchor="center")
+        flip = tk.Button(self, text="Flip Button", command=self.flip,
+                              bd=10, width=20, bg="blue", activebackground="navy")
+        flip.place(relx=0.5, rely=0.4, anchor="center")
+        next_card = tk.Button(self, text="Next", command=self.next,
+                              bd=10, bg="orange", activebackground="orangered")
+        next_card.place(relx=0.4, rely=0.5, anchor="center")
+        back = tk.Button(self, text="Back", command=self.back,
+                              bd=10, bg="orange", activebackground="orangered")
+        back.place(relx=0.6, rely=0.5, anchor="center")
+
+    def flip(self):
+        pass
+        # Flip flashcard
+    
+    def next(self):
+        pass
+        # Go to next card
+    
+    def back(self):
+        pass
+        # Go to previous card
+
+class Test(tk.Frame):
+    def __init__(self, parent, controller, logic):
+        tk.Frame.__init__(self, parent)
 
 if __name__ == "__main__":
     app = App()
