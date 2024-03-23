@@ -1,5 +1,6 @@
 import tkinter as tk
 import tkinter.font as tkf
+from Logic import Logic
 
 LARGE_FONT = ("Verdana", 20)
 SMOL_FONT = ("Verdana", 10)
@@ -7,6 +8,8 @@ SMOL_FONT = ("Verdana", 10)
 class App(tk.Tk):
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
+
+        self.logic = Logic()
 
         # Create and configure container
         container = tk.Frame(self, width=1280, height=720, background="black")
@@ -20,37 +23,51 @@ class App(tk.Tk):
         self.frames = {}
         self.PAGES = (Title, Load)
         for page in self.PAGES:
-            frame = page(container, self)
+            frame = page(container, self,logic=self.logic)
             frame.place(in_=container, x=0, y=0, relwidth=1, relheight=1)
             self.frames[page] = frame
+        
+
+        
 
         self.show_page(Title)
   
     def show_page(self, frame):
-        print(frame)
+        
         self.frames[frame].tkraise()
 
 class Title(tk.Frame):
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller,logic):
         tk.Frame.__init__(self, parent, background="white")
+        self.logic = logic
+        self.err = False
 
         label = tk.Label(self, text="Learn in a Flash!", fg="purple4", bg="steelblue", font=LARGE_FONT, 
                               height=2, borderwidth="3", relief="groove")
         label.place(relx=0.5, rely=0.1, anchor="center")
-        load = tk.Button(self, text="Load", command=lambda: controller.show_page(Load), 
+        load = tk.Button(self, text="Load Flashcards", command=lambda: controller.show_page(Load), 
                               bd=10, bg="orange", activebackground="orangered")
         load.place(relx=0.25, rely=0.6, anchor="center")
-        start = tk.Button(self, text="Start", command=self.test, 
+        start = tk.Button(self, text="Study Flashcards", command=self.test, 
                               bd=10, bg="tomato")
         start.place(relx=0.75, rely=0.6, anchor="center")
+        if self.err:
+            errl = tk.Label(self, text="Enter Flashcard Data Before Studying", fg="purple4", bg="steelblue", font=FONT, 
+                              height=1, borderwidth="2", relief="groove")
+            errl.place(relx=0.75, rely=0.6, anchor="center")
+
 
     def test(self):
-        print("To Be Implemented")
+        if (self.logic.DeckSize()) == 0:
+            self.err = True
 
 class Load(tk.Frame):
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller,logic):
         tk.Frame.__init__(self, parent)
+        self.logic = logic
+
         self.file_name = ""
+
 
         file_label = tk.Label(self, text="Input file name here:", fg="purple4", bg="steelblue", font=SMOL_FONT, 
                               height=2, borderwidth="3", relief="groove")
@@ -89,6 +106,6 @@ class Load(tk.Frame):
         self.defin.delete(1.0, tk.END)
         # Add new term to self.logic
 
-# Start gui application
-app = App()
-app.mainloop()
+if __name__ == "__main__":
+    app = App()
+    app.mainloop()
