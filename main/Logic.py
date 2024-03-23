@@ -14,6 +14,17 @@ class Logic:
     def DeckSize(self):
         return len(self.deck.getDeck())
     
+
+    def getCard(self,indx):
+        return self.deck.getCardIndex(indx)
+    
+
+    def getInfo(self,indx,side):
+        card = self.getCard(indx)
+        if side = 'T':
+            
+
+    
     
 
 

@@ -140,6 +140,10 @@ class Learn(tk.Frame):
     def __init__(self, parent, controller, logic):
         tk.Frame.__init__(self, parent)
 
+        self.side = 'T' #t for term d for def (flip)
+        self.deckIndx = 0
+        self.text = logic.getInfo(self.deckIndx,self.side)
+
         self.card = tk.Label(self, text="Rouxls Kaard", fg="purple4", bg="steelblue", font=SMOL_FONT, 
                               height=15, width=60, borderwidth="3", relief="groove")
         self.card.place(relx=0.5, rely=0.2, anchor="center")
@@ -153,9 +157,13 @@ class Learn(tk.Frame):
                               bd=10, bg="orange", activebackground="orangered")
         back.place(relx=0.6, rely=0.5, anchor="center")
 
+        load = tk.Button(self, text="Return to Main", command=lambda: controller.show_page(Title), 
+                              bd=10, bg="orange", activebackground="orangered")
+        load.place(relx=0.25, rely=0.6, anchor="center")
+
     def flip(self):
         pass
-        # Flip flashcard
+        # Flip flashcard self.errl.configure(text="please enter flashcard data before studying")
     
     def next(self):
         pass
