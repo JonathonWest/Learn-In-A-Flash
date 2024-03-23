@@ -48,12 +48,12 @@ class Title(tk.Frame):
         load = tk.Button(self, text="Load Flashcards", command=lambda: controller.show_page(Load), 
                               bd=10, bg="orange", activebackground="orangered")
         load.place(relx=0.25, rely=0.6, anchor="center")
-        start = tk.Button(self, text="Study Flashcards", command=self.test, 
+        start = tk.Button(self, text="Study Flashcards", command=self.test(), 
                               bd=10, bg="tomato")
         start.place(relx=0.75, rely=0.6, anchor="center")
         if self.err:
-            errl = tk.Label(self, text="Enter Flashcard Data Before Studying", fg="purple4", bg="steelblue", font=FONT, 
-                              height=1, borderwidth="2", relief="groove")
+            errl = tk.Label(self, text="Enter Flashcard Data Before Studying", fg="purple4", bg="steelblue", font=SMOL_FONT, 
+                                height=1, borderwidth="2", relief="groove")
             errl.place(relx=0.75, rely=0.6, anchor="center")
 
 
