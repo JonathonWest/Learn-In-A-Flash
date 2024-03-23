@@ -40,7 +40,7 @@ class Title(tk.Frame):
         tk.Frame.__init__(self, parent, background="white")
         self.logic = logic
         self.err = False
-
+        self.controller = controller
         label = tk.Label(self, text="Learn in a Flash!", fg="purple4", bg="steelblue", font=LARGE_FONT, 
                               height=2, borderwidth="3", relief="groove")
         label.place(relx=0.5, rely=0.1, anchor="center")
@@ -53,6 +53,8 @@ class Title(tk.Frame):
         self.errl.place(relx=0.75, rely=0.4, anchor="center")
         start = tk.Button(self, text="Study Flashcards", command=self.test, 
                               bd=10, bg="tomato")
+        
+  
         start.place(relx=0.75, rely=0.6, anchor="center")
         
         
@@ -61,6 +63,8 @@ class Title(tk.Frame):
     def test(self):
         if (self.logic.DeckSize()) == 0:
             self.errl.configure(text="please enter flashcard data before studying")
+        else:
+            self.controller.show_page(Select)
 
 
 class Load(tk.Frame):
