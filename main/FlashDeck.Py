@@ -8,8 +8,7 @@ class Flashdeck:
         if link != None:
             self.readIn(link)
 
-        for d in self.deck:
-            print(d.getTerm())
+        
 
     
     def readIn(self,link):
