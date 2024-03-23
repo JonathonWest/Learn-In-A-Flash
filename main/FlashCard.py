@@ -2,7 +2,7 @@ class Flashcard:
     def __init__(self, term, definition):
         self.term = term
         self.definition = definition
-        self
+        self.picture = 'none'
     
     #getters n setters
     def getTerm(self):
@@ -13,3 +13,9 @@ class Flashcard:
         self.term = Nterm
     def setTerm(self,Ndef):
         self.definition = Ndef
+
+    def setPicture(self,image):
+        self.picture = image
+
+    def getPicture(self):
+        return self.picture

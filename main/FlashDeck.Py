@@ -34,6 +34,12 @@ class Flashdeck:
             reader = csv.reader(csvfile)
             for row in reader:
                 self.deck.append(Flashcard(row[0],row[1]))
+
+    def getCardIndex(self,index):
+        return self.deck[index]
+    
+    def getDeck(self):
+        return self.deck
    
 
 
