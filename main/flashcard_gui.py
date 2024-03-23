@@ -1,6 +1,8 @@
 import tkinter as tk
 import tkinter.font as tkf
 from Logic import Logic
+import pyttsx3
+
 
 LARGE_FONT = ("Verdana", 20)
 SMOL_FONT = ("Verdana", 10)
@@ -157,6 +159,10 @@ class Learn(tk.Frame):
                               bd=10, bg="orange", activebackground="orangered")
         back.place(relx=0.4, rely=0.5, anchor="center")
 
+        Hear = tk.Button(self, text="Hear the Term", command=self.sound,
+                              bd=10, bg="orange", activebackground="orangered")
+        Hear.place(relx=0.5, rely=0.7, anchor="center")
+
         load = tk.Button(self, text="Return to Main", command=lambda: controller.show_page(Title), 
                               bd=10, bg="orange", activebackground="orangered")
         load.place(relx=0.25, rely=0.6, anchor="center")
@@ -186,6 +192,12 @@ class Learn(tk.Frame):
     def update(self):
         self.text = self.logic.getInfo(self.deckIndx,self.side)
         self.card.configure(text=self.text)
+    
+    def sound(self):
+        engine = pyttsx3.init()
+        engine.say(self.text)
+        engine.runAndWait()
+
 
 class Test(tk.Frame):
     def __init__(self, parent, controller, logic):
