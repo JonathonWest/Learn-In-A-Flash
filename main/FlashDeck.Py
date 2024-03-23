@@ -12,8 +12,8 @@ class Flashdeck:
 
     
     def readIn(self,link):
-        
-        if(link.split(".")[1]=="txt"):
+        link = link.strip("'\"")
+        if("txt" in link.split(".")[1]):
             self.readTxt(link)
         else:
             self.readCsv(link)
