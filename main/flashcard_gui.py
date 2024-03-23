@@ -139,12 +139,12 @@ class Select(tk.Frame):
 class Learn(tk.Frame):
     def __init__(self, parent, controller, logic):
         tk.Frame.__init__(self, parent)
-
-        self.side = 'T' #t for term d for def (flip)
+        self.logic = logic
+        self.side = True #t for term d for def (flip)
         self.deckIndx = 0
-        self.text = logic.getInfo(self.deckIndx,self.side)
+        self.text = 'Flip to Begin'
 
-        self.card = tk.Label(self, text="Rouxls Kaard", fg="purple4", bg="steelblue", font=SMOL_FONT, 
+        self.card = tk.Label(self, text=self.text, fg="purple4", bg="steelblue", font=SMOL_FONT, 
                               height=15, width=60, borderwidth="3", relief="groove")
         self.card.place(relx=0.5, rely=0.2, anchor="center")
         flip = tk.Button(self, text="Flip Button", command=self.flip,
@@ -152,30 +152,91 @@ class Learn(tk.Frame):
         flip.place(relx=0.5, rely=0.4, anchor="center")
         next_card = tk.Button(self, text="Next", command=self.next,
                               bd=10, bg="orange", activebackground="orangered")
-        next_card.place(relx=0.4, rely=0.5, anchor="center")
+        next_card.place(relx=0.6, rely=0.5, anchor="center")
         back = tk.Button(self, text="Back", command=self.back,
                               bd=10, bg="orange", activebackground="orangered")
-        back.place(relx=0.6, rely=0.5, anchor="center")
+        back.place(relx=0.4, rely=0.5, anchor="center")
 
         load = tk.Button(self, text="Return to Main", command=lambda: controller.show_page(Title), 
                               bd=10, bg="orange", activebackground="orangered")
         load.place(relx=0.25, rely=0.6, anchor="center")
 
     def flip(self):
-        pass
+
+        if self.side:
+            self.side =  False
+        elif self.side == False:
+            self.side = True
+        print(self.side)
+        self.update()
         # Flip flashcard self.errl.configure(text="please enter flashcard data before studying")
     
     def next(self):
-        pass
-        # Go to next card
+        self.deckIndx+=1
+        if self.deckIndx >= self.logic.DeckSize():
+            self.deckIndx = 0
+        self.update()
     
     def back(self):
-        pass
-        # Go to previous card
+        self.deckIndx-=1
+        if self.deckIndx < 0:
+            self.deckIndx = self.logic.DeckSize() -1
+        self.update()
+
+    def update(self):
+        self.text = self.logic.getInfo(self.deckIndx,self.side)
+        self.card.configure(text=self.text)
 
 class Test(tk.Frame):
     def __init__(self, parent, controller, logic):
         tk.Frame.__init__(self, parent)
+        self.logic = logic
+        self.side = True #t for term d for def (flip)
+        self.deckIndx = 0
+        self.text = 'Flip to Begin'
+
+        self.card = tk.Label(self, text=self.text, fg="purple4", bg="steelblue", font=SMOL_FONT, 
+                              height=15, width=60, borderwidth="3", relief="groove")
+        self.card.place(relx=0.5, rely=0.2, anchor="center")
+        flip = tk.Button(self, text="Flip Button", command=self.flip,
+                              bd=10, width=20, bg="blue", activebackground="navy")
+        flip.place(relx=0.5, rely=0.4, anchor="center")
+        Correct_card = tk.Button(self, text="Correct", command=self.next,
+                              bd=10, bg="orange", activebackground="orangered")
+        Correct_card.place(relx=0.6, rely=0.5, anchor="center")
+        Incorrect = tk.Button(self, text="Incorrect", command=self.next,
+                              bd=10, bg="orange", activebackground="orangered")
+        Incorrect.place(relx=0.4, rely=0.5, anchor="center")
+
+        load = tk.Button(self, text="Return to Main", command=lambda: controller.show_page(Title), 
+                              bd=10, bg="orange", activebackground="orangered")
+        load.place(relx=0.25, rely=0.6, anchor="center")
+
+    def flip(self):
+
+        if self.side:
+            self.side =  False
+        elif self.side == False:
+            self.side = True
+        print(self.side)
+        self.update()
+        # Flip flashcard self.errl.configure(text="please enter flashcard data before studying")
+    
+    def next(self):
+        self.deckIndx+=1
+        if self.deckIndx >= self.logic.DeckSize():
+            self.deckIndx = 0
+        self.update()
+    
+    def back(self):
+        self.deckIndx-=1
+        if self.deckIndx < 0:
+            self.deckIndx = self.logic.DeckSize() -1
+        self.update()
+
+    def update(self):
+        self.text = self.logic.getInfo(self.deckIndx,self.side)
+        self.card.configure(text=self.text)
 
 if __name__ == "__main__":
     app = App()
