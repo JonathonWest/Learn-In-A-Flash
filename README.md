@@ -16,4 +16,9 @@ Once your token is aquired, save it in a file called "private.py" and store it i
 keykey = [YOUR TOKEN HERE]
 
 Pips to install:
-  
+  the following modules are needed to run our program
+  OpenAI
+  Tkinter
+  pyttsx3
+
+To run the program, make sure you are in the main directory, then run flashcard_gui.py
