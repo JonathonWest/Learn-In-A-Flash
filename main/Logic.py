@@ -34,3 +34,12 @@ class Logic:
 
     def testMnem(self,prompt):
         return getMn(prompt)
+    
+    def getStr(self):
+        st= ""
+        for card in self.deck.getDeck():
+            st+= card.getTerm()
+            st+=" || "
+            st+= card.getDef()
+            st+="\n"
+        return st

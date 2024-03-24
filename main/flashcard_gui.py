@@ -24,6 +24,7 @@ class App(tk.Tk):
 
         # Create and configure container
         container = tk.Frame(self, width=1280, height=720, background="medium blue")
+        
         # container.pack(side = "top", fill = "both", expand = True) 
         container.grid(sticky='nswe')
         container.grid_propagate(0)
@@ -122,9 +123,13 @@ class Load(tk.Frame):
         self.term.place(relx=0.4, rely=0.75, anchor="center")
         self.defin = tk.Text(self, width=30, height=2)
         self.defin.place(relx=0.6, rely=0.75, anchor="center")
-        done = tk.Button(self, text="Submit flashcard", command=self.get_term,
+        done = tk.Button(self, text="Submit Flashcard", command=self.get_term,
                           bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
-        done.place(relx=0.43, rely=0.85)
+        done.place(relx=0.4, rely=0.85, anchor="center")
+
+        save = tk.Button(self, text="Save Flashcard File", command=self.save_set,
+                          bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
+        save.place(relx=0.6, rely=0.85, anchor="center")
 
     def get_input(self):
         self.file_name = self.file_input.get(1.0, "end-1c")
@@ -145,6 +150,18 @@ class Load(tk.Frame):
             new_def = self.defin.get(1.0, "end-1c")
             self.defin.delete(1.0, tk.END)
             self.logic.addCard(new_term,new_def)
+
+    def save_set(self):
+        if (self.logic.DeckSize()) != 0:
+            f = None  # Initialize f with None
+            f = fd.asksaveasfile(mode='w', defaultextension=".txt")
+            if f is None: # asksaveasfile return `None` if dialog closed with "cancel".
+                return
+            text2save = self.logic.getStr() 
+            print(text2save)
+            f.write(text2save)
+            f.close() # `()` was missing.
+
 
 class Select(tk.Frame):
     def __init__(self, parent, controller, logic):
@@ -332,4 +349,5 @@ class Test(tk.Frame):
 
 if __name__ == "__main__":
     app = App()
+    app.resizable(width=False, height=False)
     app.mainloop()
