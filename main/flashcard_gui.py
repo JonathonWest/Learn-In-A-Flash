@@ -205,7 +205,7 @@ class Learn(tk.Frame):
         next_card = tk.Button(self, text="Next", command=self.next,
                               bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
         next_card.place(relx=0.6, rely=0.45, anchor="center")
-        back = tk.Button(self, text="Back", command=self.back,
+        back = tk.Button(self, text="Back", command=self.backcard,
                               bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
 
         back.place(relx=0.4, rely=0.45, anchor="center")
@@ -238,12 +238,15 @@ class Learn(tk.Frame):
         self.deckIndx+=1
         if self.deckIndx >= self.logic.DeckSize():
             self.deckIndx = 0
+        self.side = True
         self.update()
     
-    def back(self):
+    def backcard(self):
         self.deckIndx-=1
+        
         if self.deckIndx < 0:
             self.deckIndx = self.logic.DeckSize() -1
+        self.side = True
         self.update()
 
     def update(self):
@@ -364,4 +367,5 @@ class Test(tk.Frame):
 if __name__ == "__main__":
     app = App()
     app.resizable(width=False, height=False)
+    app.title ("Learn in a Flash!")
     app.mainloop()
