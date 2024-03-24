@@ -4,6 +4,7 @@ from Logic import Logic
 import pyttsx3
 from tkinter import PhotoImage
 from imageGet import getTitle,getloadanstufFlash
+import random
 
 
 LARGE_FONT = ("Verdana", 30)
@@ -267,21 +268,37 @@ class Test(tk.Frame):
         self.update()
         # Flip flashcard self.errl.configure(text="please enter flashcard data before studying")
     
+    def nextCard(self):
+        self.deckIndx = random.randint(0, self.logic.DeckSize()) % (self.logic.DeckSize() - 1)
+        #while the study value is too low
+        while self.logic.getCard(self.deckIndx).getStudyVal() > 3:
+            self.deckIndx += 1
+            if self.deckIndx >= self.logic.DeckSize():
+                self.deckIndx = 0
+            #chance that it will give you the card again even if you already studied it
+            rand = random.randint(1,4)
+            if rand == 1:
+                break
+
+
     def correct(self):
-        self.deckIndx+=1
-        if self.deckIndx >= self.logic.DeckSize():
-            self.deckIndx = 0
+        card = self.logic.getCard(self.deckIndx)
+        card.addStudyVal()
+        
+        self.nextCard()
         self.update()
     
     def wrong(self):
-        self.deckIndx-=1
-        if self.deckIndx < 0:
-            self.deckIndx = self.logic.DeckSize() -1
+        card = self.logic.getCard(self.deckIndx)
+        card.subtractStudyVal()
+
+        self.nextCard()
         self.update()
 
     def update(self):
         self.text = self.logic.getInfo(self.deckIndx,self.side)
         self.card.configure(text=self.text)
+        self.side = True
 
         
 

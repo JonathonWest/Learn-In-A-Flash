@@ -34,11 +34,3 @@ class Logic:
 
     def testMnem(self,prompt):
         return getMn(prompt)
-    
-    
-
-
-
-if __name__ == "__main__":
-    log = Logic()
-    print(log.testMnem("[abrir] [to open]"))
