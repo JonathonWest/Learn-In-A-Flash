@@ -3,6 +3,7 @@ class Flashcard:
         self.term = term
         self.definition = definition
         self.picture = 'none'
+        self.studyVal = 0
     
     #getters n setters
     def getTerm(self):
@@ -19,3 +20,14 @@ class Flashcard:
 
     def getPicture(self):
         return self.picture
+    
+    def getStudyVal(self):
+        return self.studyVal
+
+    #dealing with values for study algorithm
+    def addStudyVal(self):
+        self.studyVal += 1
+
+    def subtractStudyVal(self):
+        if self.studyVal > 0:
+            self.studyVal -= 1
