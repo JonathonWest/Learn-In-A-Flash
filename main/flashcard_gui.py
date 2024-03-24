@@ -280,13 +280,25 @@ class Test(tk.Frame):
             if rand == 1:
                 break
 
+    def checkComplete(self):
+        complete = True
+        for i in range(0, self.logic.DeckSize()):
+            if self.logic.getCard(i).getStudyVal() < 3:
+                complete = False
+        return complete
+
+
 
     def correct(self):
         card = self.logic.getCard(self.deckIndx)
         card.addStudyVal()
         
         self.nextCard()
-        self.update()
+        if self.checkComplete():
+            self.text= "you are done, great studying!"
+            self.card.configure(text=self.text)
+        else:
+            self.update()
     
     def wrong(self):
         card = self.logic.getCard(self.deckIndx)
