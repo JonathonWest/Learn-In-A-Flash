@@ -11,13 +11,16 @@ def getHint(prompt):
             "content": (
                 "You are a hint machine and you need to "
                 "create hints for someone who has a term and needs to find the definition"
+                
+                "you must limit your response to a maximum of 200 characters"
                 "they will be given in the form: [term] [definition]"
+                "you cannot put the term or definition in your response"
             ),
         },
         {
             "role": "user",
             "content": (
-                "the prompt is " + prompt + "give me an output in this format [hint: ]. Do not include the definition in the final output."
+                "the prompt is " + prompt + "give me a single output in this format [hint: ]."
             ),
         },
     ]
@@ -34,3 +37,6 @@ def getHint(prompt):
     for choice in response.choices:
         if choice.message.role == 'assistant':
             return(choice.message.content)
+        
+if __name__ == "__main__":
+    print(getHint("[woodland mansion] [hosuse in dark oak forrest biome]"))

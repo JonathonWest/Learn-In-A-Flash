@@ -11,6 +11,7 @@ def getMn(prompt):
             "content": (
                 "You are a mnemonic machine and you need to "
                 "create mnemonic devices to help memorize terms and their definition"
+                "you must limit your response to a maximum of 200 characters"
                 "they will be given in the form: [term] [definition]"
             ),
         },

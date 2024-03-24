@@ -1,5 +1,6 @@
 from FlashDeck import Flashdeck
 from mnemonic import getMn
+from hint import getHint
 class Logic:
     
 
@@ -34,6 +35,14 @@ class Logic:
         else:
             prompt = "["+term+"] ["+defin+"]"
             return getMn(prompt)
+    def gethint(self,indx):
+        term = self.getInfo(indx,True)
+        defin = self.getInfo(indx,False)
+        if (len(term) < 3) or (len(defin) < 3):
+            return "length of term or definition too short"
+        else:
+            prompt = "["+term+"] ["+defin+"]"
+            return getHint(prompt)
 
     def testMnem(self,prompt):
         return getMn(prompt)

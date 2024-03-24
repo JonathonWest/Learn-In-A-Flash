@@ -263,7 +263,7 @@ class Test(tk.Frame):
         tk.Frame.__init__(self, parent,background="medium blue")
         self.back = getback()
         self.logic = logic
-        self.side = True #t for term d for def (flip)
+        self.side = False #t for term d for def (flip)
         self.deckIndx = 0
         self.text = 'Flip to Begin'
         self.hintText = ""
@@ -300,7 +300,7 @@ class Test(tk.Frame):
 
     def aihint(self):
         
-        self.hintText = self.logic.getmnem(self.deckIndx)
+        self.hintText = self.logic.gethint(self.deckIndx)
         self.hint.configure(text=self.hintText)
 
     def flip(self):
@@ -355,7 +355,7 @@ class Test(tk.Frame):
     def update(self):
         self.text = self.logic.getInfo(self.deckIndx,self.side)
         self.card.configure(text=self.text)
-        self.side = True
+        self.side = False
 
         
 
