@@ -233,31 +233,32 @@ class Learn(tk.Frame):
 
 class Test(tk.Frame):
     def __init__(self, parent, controller, logic):
-        tk.Frame.__init__(self, parent)
-        
+        tk.Frame.__init__(self, parent,background="medium blue")
+        self.back = getback()
         self.logic = logic
         self.side = True #t for term d for def (flip)
         self.deckIndx = 0
         self.text = 'Flip to Begin'
         
 
-        self.card = tk.Label(self, text=self.text, fg="purple4", bg="steelblue", font=SMOL_FONT, 
-                              height=15, width=60, borderwidth="3", relief="groove")
+        self.card = tk.Label(self, text=self.text, fg="DarkOrange2", bg="medium blue", font=LARGE_FONT, 
+                              height=5, width=20, borderwidth="9", relief="groove")
         self.card.place(relx=0.5, rely=0.2, anchor="center")
 
-        flip = tk.Button(self, text="Flip Button", command=self.flip,
-                              bd=10, width=20, bg="blue", activebackground="navy")
-        flip.place(relx=0.5, rely=0.4, anchor="center")
-        Correct_card = tk.Button(self, text="Correct", command=self.correct,
-                              bd=10, bg="orange", activebackground="orangered")
-        Correct_card.place(relx=0.6, rely=0.5, anchor="center")
-        Incorrect = tk.Button(self, text="Incorrect", command=self.wrong,
-                              bd=10, bg="orange", activebackground="orangered")
-        Incorrect.place(relx=0.4, rely=0.5, anchor="center")
+        flip = tk.Button(self, text="Flip Flashcard", command=self.flip,
+                              bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
+        flip.place(relx=0.5, rely=0.45, anchor="center")
 
-        load = tk.Button(self, text="Return to Main", command=lambda: controller.show_page(Title), 
-                              bd=10, bg="orange", activebackground="orangered")
-        load.place(relx=0.25, rely=0.6, anchor="center")
+        Correct_card = tk.Button(self, text="Correct", command=self.correct,
+                              bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
+        Correct_card.place(relx=0.6, rely=0.6, anchor="center")
+        Incorrect = tk.Button(self, text="Incorrect", command=self.wrong,
+                              bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
+        Incorrect.place(relx=0.4, rely=0.6, anchor="center")
+
+        ret = tk.Button(self, image=self.back, command=lambda: controller.show_page(Title),bg='medium blue',bd=0,activebackground="medium blue", width=100, height=100)
+       
+        ret.place(relx=0.2, rely=0.5, anchor="center")
 
     
 
