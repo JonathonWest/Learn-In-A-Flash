@@ -1,5 +1,5 @@
 from FlashDeck import Flashdeck
-
+from mnemonic import getMn
 class Logic:
     
 
@@ -26,9 +26,14 @@ class Logic:
         if side == False:
             return card.getDef()
         
+    def getmnem(self,indx):
+        term = self.getInfo(indx,True)
+        defin = self.getInfo(indx,False)
+        prompt = "["+term+"] ["+defin+"]"
+        return getMn(prompt)
 
-
-
+    def testMnem(self,prompt):
+        return getMn(prompt)
     
     
 
@@ -36,4 +41,4 @@ class Logic:
 
 if __name__ == "__main__":
     log = Logic()
-    print('Hello World')
+    print(log.testMnem("[abrir] [to open]"))

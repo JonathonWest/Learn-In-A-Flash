@@ -145,10 +145,21 @@ class Learn(tk.Frame):
         self.side = True #t for term d for def (flip)
         self.deckIndx = 0
         self.text = 'Flip to Begin'
+        self.mnem = ""
 
         self.card = tk.Label(self, text=self.text, fg="purple4", bg="steelblue", font=SMOL_FONT, 
                               height=15, width=60, borderwidth="3", relief="groove")
         self.card.place(relx=0.5, rely=0.2, anchor="center")
+
+        self.mnemo = tk.Label(self, text=self.mnem, fg="purple4", bg="steelblue", font=SMOL_FONT, 
+                              height=15, width=90, borderwidth="3", relief="groove",wraplength=400)
+        self.mnemo.place(relx=0.5, rely=0.8, anchor="center")
+
+        getmnem = tk.Button(self, text="Get Mnemonic", command=self.fillmnem,
+                              bd=10, width=20, bg="blue", activebackground="navy")
+        getmnem.place(relx=0.5, rely=0.9, anchor="center")
+
+
         flip = tk.Button(self, text="Flip Button", command=self.flip,
                               bd=10, width=20, bg="blue", activebackground="navy")
         flip.place(relx=0.5, rely=0.4, anchor="center")
@@ -169,13 +180,18 @@ class Learn(tk.Frame):
         load.place(relx=0.25, rely=0.6, anchor="center")
 
 
+    def fillmnem(self):
+        self.mnem = self.logic.getmnem(self.deckIndx)
+        self.mnemo.configure(text=self.mnem)
+
+
     def flip(self):
 
         if self.side:
             self.side =  False
         elif self.side == False:
             self.side = True
-        print(self.side)
+        
         self.update()
         # Flip flashcard self.errl.configure(text="please enter flashcard data before studying")
     
@@ -192,6 +208,8 @@ class Learn(tk.Frame):
         self.update()
 
     def update(self):
+        self.mnem = ""
+        self.mnemo.configure(text=self.mnem)
         self.text = self.logic.getInfo(self.deckIndx,self.side)
         self.card.configure(text=self.text)
     
@@ -208,10 +226,12 @@ class Test(tk.Frame):
         self.side = True #t for term d for def (flip)
         self.deckIndx = 0
         self.text = 'Flip to Begin'
+        
 
         self.card = tk.Label(self, text=self.text, fg="purple4", bg="steelblue", font=SMOL_FONT, 
                               height=15, width=60, borderwidth="3", relief="groove")
         self.card.place(relx=0.5, rely=0.2, anchor="center")
+
         flip = tk.Button(self, text="Flip Button", command=self.flip,
                               bd=10, width=20, bg="blue", activebackground="navy")
         flip.place(relx=0.5, rely=0.4, anchor="center")
@@ -226,13 +246,15 @@ class Test(tk.Frame):
                               bd=10, bg="orange", activebackground="orangered")
         load.place(relx=0.25, rely=0.6, anchor="center")
 
+    
+
     def flip(self):
 
         if self.side:
             self.side =  False
         elif self.side == False:
             self.side = True
-        print(self.side)
+        
         self.update()
         # Flip flashcard self.errl.configure(text="please enter flashcard data before studying")
     
@@ -268,17 +290,7 @@ class Test(tk.Frame):
                               bd=10, bg="orange", activebackground="orangered")
         ret.place(relx=0.25, rely=0.8, anchor="center")
 
-    def reveal(self):
-        pass
-        # Reveal card
-
-    def next(self):
-        pass
-        # Go to next card
     
-    def back(self):
-        pass
-        # Go to previous card
 
 if __name__ == "__main__":
     app = App()
