@@ -29,8 +29,11 @@ class Logic:
     def getmnem(self,indx):
         term = self.getInfo(indx,True)
         defin = self.getInfo(indx,False)
-        prompt = "["+term+"] ["+defin+"]"
-        return getMn(prompt)
+        if (len(term) < 3) or (len(defin) < 3):
+            return "length of term or definition too short"
+        else:
+            prompt = "["+term+"] ["+defin+"]"
+            return getMn(prompt)
 
     def testMnem(self,prompt):
         return getMn(prompt)
