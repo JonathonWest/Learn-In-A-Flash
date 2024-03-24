@@ -266,6 +266,7 @@ class Test(tk.Frame):
         self.side = True #t for term d for def (flip)
         self.deckIndx = 0
         self.text = 'Flip to Begin'
+        self.hintText = ""
         
 
         self.card = tk.Label(self, text=self.text, fg="DarkOrange2", bg="medium blue", font=LARGE_FONT, 
@@ -276,18 +277,31 @@ class Test(tk.Frame):
                               bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
         flip.place(relx=0.5, rely=0.45, anchor="center")
 
+        self.hint = tk.Label(self, text=self.hintText, fg="DarkOrange2", bg="medium blue", font=SOSO_FONT, 
+                              height=15, width=90, borderwidth="3", relief="groove",wraplength=400)
+        self.hint.place(relx=0.5, rely=0.8, anchor="center")
+
+        gethint = tk.Button(self, text="Generate Hint", command=self.aihint,
+                              bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
+        gethint.place(relx=0.5, rely=0.6, anchor="center")
+
+        
+
         Correct_card = tk.Button(self, text="Correct", command=self.correct,
                               bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
-        Correct_card.place(relx=0.6, rely=0.6, anchor="center")
+        Correct_card.place(relx=0.65, rely=0.45, anchor="center")
         Incorrect = tk.Button(self, text="Incorrect", command=self.wrong,
                               bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
-        Incorrect.place(relx=0.4, rely=0.6, anchor="center")
+        Incorrect.place(relx=0.35, rely=0.45, anchor="center")
 
         ret = tk.Button(self, image=self.back, command=lambda: controller.show_page(Title),bg='medium blue',bd=0,activebackground="medium blue", width=100, height=100)
        
         ret.place(relx=0.2, rely=0.5, anchor="center")
 
-    
+    def aihint(self):
+        
+        self.hintText = self.logic.getmnem(self.deckIndx)
+        self.hint.configure(text=self.hintText)
 
     def flip(self):
 
