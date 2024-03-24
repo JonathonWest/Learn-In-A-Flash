@@ -1,8 +1,8 @@
 import tkinter as tk
-import tkinter.font as tkf
 from Logic import Logic
 import pyttsx3
-from tkinter import PhotoImage
+# from tkinter import PhotoImage
+from tkinter import filedialog as fd
 
 import random
 from imageGet import getTitle,getloadanstufFlash,getGeneric,getback,getselect
@@ -101,6 +101,10 @@ class Load(tk.Frame):
                           bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
         enter.place(relx=0.5, rely=0.275, anchor="center")
 
+        select = tk.Button(self, text="Select File From Computer", command=self.select_file,
+                          bd=10, width=20, background="medium blue",fg="DarkOrange2",font=MED_FONT)
+        select.place(relx=0.5, rely=0.35, anchor="center")
+
         ret = tk.Button(self, image=self.back, command=lambda: controller.show_page(Title),bg='medium blue',bd=0,activebackground="medium blue", width=100, height=100)
        
         ret.place(relx=0.2, rely=0.5, anchor="center")
@@ -127,7 +131,10 @@ class Load(tk.Frame):
         self.file_input.delete(1.0, "end-1c")
         self.logic.setDeck(self.file_name)
         
-
+    def select_file(self):
+        filetypes = (("csv files", "*.csv"), ("text files", "*.txt"))
+        self.file_name = fd.askopenfilename(title="Select your flashcard file", initialdir="/", filetypes=filetypes)
+        self.logic.setDeck(self.file_name)
 
     def get_term(self):
         new_term = self.term.get(1.0, "end-1c")
