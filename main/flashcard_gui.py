@@ -159,7 +159,7 @@ class Learn(tk.Frame):
         self.mnem = ""
 
         self.card = tk.Label(self, text=self.text, fg="DarkOrange2", bg="medium blue", font=LARGE_FONT, 
-                              height=5, width=20, borderwidth="9", relief="groove")
+                              height=5, width=20, borderwidth="9", relief="groove",wraplength=400)
         self.card.place(relx=0.5, rely=0.2, anchor="center")
 
 
@@ -245,7 +245,7 @@ class Test(tk.Frame):
         
 
         self.card = tk.Label(self, text=self.text, fg="DarkOrange2", bg="medium blue", font=LARGE_FONT, 
-                              height=5, width=20, borderwidth="9", relief="groove")
+                              height=5, width=20, borderwidth="9", relief="groove",wraplength=400)
         self.card.place(relx=0.5, rely=0.2, anchor="center")
 
         flip = tk.Button(self, text="Flip Flashcard", command=self.flip,
