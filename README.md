@@ -25,3 +25,4 @@ To run the program, make sure you are in the main directory, then run flashcard_
 Flashcards can be manually entered or entered through .txt or .csv files (txt is reccomended if your terms or definitions contain commas already)
 txt files should be created in the format term||definition (quizlet can automatically export this using "||" as custom seperator)
 cards can also be manually entered and saved within the program.
+NOTE: due to the tts module we are using, the program may not work on non-windows machines
