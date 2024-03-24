@@ -3,11 +3,15 @@ import tkinter.font as tkf
 from Logic import Logic
 import pyttsx3
 from tkinter import PhotoImage
-from imageGet import getTitle,getloadanstufFlash
+
 import random
+from imageGet import getTitle,getloadanstufFlash,getGeneric,getback,getselect
+
 
 
 LARGE_FONT = ("Verdana", 30)
+MED_FONT = ("Verdana", 15)
+SOSO_FONT = ("Verdana", 13)
 SMOL_FONT = ("Verdana", 10)
 
 
@@ -57,10 +61,10 @@ class Title(tk.Frame):
         load = tk.Button(self, image=self.loaf, command=lambda: controller.show_page(Load),bg='medium blue',bd=0,activebackground="medium blue")
         load.place(relx=0.25, rely=0.62, anchor="center")
 
-        self.errl = tk.Label(self, text="",fg="red" , font=SMOL_FONT, bg='medium blue',height=1, borderwidth="2")
-        self.errl.place(relx=0.75, rely=0.4, anchor="center")
-        start = tk.Button(self, text="Study Flashcards", command=self.test, 
-                              bd=10, bg="tomato")
+        self.errl = tk.Label(self, text="",fg="red" , font=LARGE_FONT, bg='medium blue',height=1, borderwidth="2")
+        self.errl.place(relx=0.5, rely=0.9, anchor="center")
+        start = tk.Button(self, image=self.studf, command=self.test,bg='medium blue',bd=0,activebackground="medium blue")
+        
         
   
         start.place(relx=0.75, rely=0.62, anchor="center")
@@ -77,45 +81,46 @@ class Title(tk.Frame):
 
 class Load(tk.Frame):
     def __init__(self, parent, controller,logic):
-        tk.Frame.__init__(self, parent)
+        tk.Frame.__init__(self, parent, background="medium blue")
         
         self.logic = logic
 
         self.file_name = ""
+        
+        self.back = getback()
+        
+
+        file_label = tk.Label(self, text="Input Flashcard File Here",fg="DarkOrange2", font=LARGE_FONT,background="medium blue")
+        file_label.place(relx=0.5, rely=0.1, anchor="center")
 
 
-        file_label = tk.Label(self, text="Input file name here:", fg="purple4", bg="steelblue", font=SMOL_FONT, 
-                              height=2, borderwidth="3", relief="groove")
-        file_label.place(relx=0.5, rely=0.05, anchor="center")
-        self.file_input = tk.Text(self, width=75, height=3)
-        self.file_input.place(relx=0.4, rely=0.1, anchor="center")
-        enter = tk.Button(self, text="Enter  Flashcard File Path", command=self.get_input,
-                          bd=10, bg="orange", activebackground="orangered")
-        enter.place(relx=0.7, rely=0.1, anchor="center")
+        self.file_input = tk.Text(self, width=75, height=2)
+        self.file_input.place(relx=0.5, rely=0.2, anchor="center")
 
-        ret = tk.Button(self, text="Return to Main", command=lambda: controller.show_page(Title), 
-                              bd=10, bg="orange", activebackground="orangered")
-        ret.place(relx=0.25, rely=0.6, anchor="center")
+        enter = tk.Button(self, text="Enter File Path", command=self.get_input,
+                          bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
+        enter.place(relx=0.5, rely=0.275, anchor="center")
 
-        manual_label = tk.Label(self, text="Input Flashcards Manually", fg="purple4", bg="steelblue", font=SMOL_FONT, 
-                              height=2, borderwidth="3", relief="groove")
-        manual_label.place(relx=0.5, rely=0.4, anchor="center")
+        ret = tk.Button(self, image=self.back, command=lambda: controller.show_page(Title),bg='medium blue',bd=0,activebackground="medium blue", width=100, height=100)
+       
+        ret.place(relx=0.2, rely=0.5, anchor="center")
 
-        term_label = tk.Label(self, text="Term here", fg="purple4", bg="steelblue", font=SMOL_FONT, 
-                              height=2, borderwidth="3", relief="groove")
-        term_label.place(relx=0.4, rely=0.5, anchor="center")
+        manual_label = tk.Label(self, text="Input Cards Manually",fg="DarkOrange2", font=LARGE_FONT,background="medium blue")
+        manual_label.place(relx=0.5, rely=0.55, anchor="center")
 
-        defi_label = tk.Label(self, text="Definition here", fg="purple4", bg="steelblue", font=SMOL_FONT, 
-                              height=2, borderwidth="3", relief="groove")
-        defi_label.place(relx=0.6, rely=0.5, anchor="center")
+        term_label = tk.Label(self, text="Term",fg="DarkOrange2", font=LARGE_FONT,background="medium blue")
+        term_label.place(relx=0.4, rely=0.67, anchor="center")
 
-        self.term = tk.Text(self, width=30, height=3)
-        self.term.place(relx=0.4, rely=0.6, anchor="center")
-        self.defin = tk.Text(self, width=30, height=3)
-        self.defin.place(relx=0.6, rely=0.6, anchor="center")
-        done = tk.Button(self, text="Submit Flashcard", command=self.get_term,
-                         bd=10, bg="royalblue", activebackground="mediumblue")
-        done.place(relx=0.48, rely=0.65)
+        defi_label = tk.Label(self, text="Definition",fg="DarkOrange2", font=LARGE_FONT,background="medium blue")
+        defi_label.place(relx=0.6, rely=0.67, anchor="center")
+
+        self.term = tk.Text(self, width=30, height=2)
+        self.term.place(relx=0.4, rely=0.75, anchor="center")
+        self.defin = tk.Text(self, width=30, height=2)
+        self.defin.place(relx=0.6, rely=0.75, anchor="center")
+        done = tk.Button(self, text="Submit flashcard", command=self.get_term,
+                          bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
+        done.place(relx=0.43, rely=0.85)
 
     def get_input(self):
         self.file_name = self.file_input.get(1.0, "end-1c")
@@ -136,57 +141,58 @@ class Load(tk.Frame):
 
 class Select(tk.Frame):
     def __init__(self, parent, controller, logic):
-        tk.Frame.__init__(self, parent)
-        
-
-        learn = tk.Button(self, text="Learn", command=lambda: controller.show_page(Learn),
-                          bd=20, bg="orange", activebackground="orangered")
-        learn.place(relx=0.5, rely=0.3, anchor="center")
-        test = tk.Button(self, text="Test", command=lambda: controller.show_page(Test),
-                          bd=20, bg="orange", activebackground="orangered")
-        test.place(relx=0.5, rely=0.7, anchor="center")
+        tk.Frame.__init__(self, parent,background="medium blue")
+        self.learni , self.studi = getselect()
+        learn = tk.Button(self, image=self.learni, command=lambda: controller.show_page(Learn),bg='medium blue',bd=0,activebackground="medium blue")
+        learn.place(relx=0.5, rely=0.25, anchor="center")
+        test = tk.Button(self, image=self.studi, command=lambda: controller.show_page(Test),bg='medium blue',bd=0,activebackground="medium blue")
+        test.place(relx=0.5, rely=0.75, anchor="center")
 
 class Learn(tk.Frame):
     def __init__(self, parent, controller, logic):
-        tk.Frame.__init__(self, parent)
-        
+        tk.Frame.__init__(self, parent,background="medium blue")
+        self.back = getback()
         self.logic = logic
         self.side = True #t for term d for def (flip)
         self.deckIndx = 0
         self.text = 'Flip to Begin'
         self.mnem = ""
 
-        self.card = tk.Label(self, text=self.text, fg="purple4", bg="steelblue", font=SMOL_FONT, 
-                              height=15, width=60, borderwidth="3", relief="groove")
+        self.card = tk.Label(self, text=self.text, fg="DarkOrange2", bg="medium blue", font=LARGE_FONT, 
+                              height=5, width=20, borderwidth="9", relief="groove")
         self.card.place(relx=0.5, rely=0.2, anchor="center")
 
-        self.mnemo = tk.Label(self, text=self.mnem, fg="purple4", bg="steelblue", font=SMOL_FONT, 
+
+        self.mnemo = tk.Label(self, text=self.mnem, fg="DarkOrange2", bg="medium blue", font=SOSO_FONT, 
                               height=15, width=90, borderwidth="3", relief="groove",wraplength=400)
         self.mnemo.place(relx=0.5, rely=0.8, anchor="center")
 
-        getmnem = tk.Button(self, text="Get Mnemonic", command=self.fillmnem,
-                              bd=10, width=20, bg="blue", activebackground="navy")
-        getmnem.place(relx=0.5, rely=0.9, anchor="center")
+        getmnem = tk.Button(self, text="Generate Mnemonic", command=self.fillmnem,
+                              bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
+        getmnem.place(relx=0.35, rely=0.55, anchor="center")
 
 
-        flip = tk.Button(self, text="Flip Button", command=self.flip,
-                              bd=10, width=20, bg="blue", activebackground="navy")
-        flip.place(relx=0.5, rely=0.4, anchor="center")
+        flip = tk.Button(self, text="Flip Flashcard", command=self.flip,
+                              bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
+        flip.place(relx=0.5, rely=0.45, anchor="center")
+
+
+
         next_card = tk.Button(self, text="Next", command=self.next,
-                              bd=10, bg="orange", activebackground="orangered")
-        next_card.place(relx=0.6, rely=0.5, anchor="center")
+                              bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
+        next_card.place(relx=0.6, rely=0.45, anchor="center")
         back = tk.Button(self, text="Back", command=self.back,
-                              bd=10, bg="orange", activebackground="orangered")
+                              bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
 
-        back.place(relx=0.4, rely=0.5, anchor="center")
+        back.place(relx=0.4, rely=0.45, anchor="center")
 
         Hear = tk.Button(self, text="Hear the Term", command=self.sound,
-                              bd=10, bg="orange", activebackground="orangered")
-        Hear.place(relx=0.5, rely=0.7, anchor="center")
+                              bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
+        Hear.place(relx=0.65, rely=0.55, anchor="center")
 
-        load = tk.Button(self, text="Return to Main", command=lambda: controller.show_page(Title), 
-                              bd=10, bg="orange", activebackground="orangered")
-        load.place(relx=0.25, rely=0.6, anchor="center")
+        ret = tk.Button(self, image=self.back, command=lambda: controller.show_page(Title),bg='medium blue',bd=0,activebackground="medium blue", width=100, height=100)
+       
+        ret.place(relx=0.2, rely=0.5, anchor="center")
 
 
     def fillmnem(self):
@@ -230,31 +236,32 @@ class Learn(tk.Frame):
 
 class Test(tk.Frame):
     def __init__(self, parent, controller, logic):
-        tk.Frame.__init__(self, parent)
-        
+        tk.Frame.__init__(self, parent,background="medium blue")
+        self.back = getback()
         self.logic = logic
         self.side = True #t for term d for def (flip)
         self.deckIndx = 0
         self.text = 'Flip to Begin'
         
 
-        self.card = tk.Label(self, text=self.text, fg="purple4", bg="steelblue", font=SMOL_FONT, 
-                              height=15, width=60, borderwidth="3", relief="groove")
+        self.card = tk.Label(self, text=self.text, fg="DarkOrange2", bg="medium blue", font=LARGE_FONT, 
+                              height=5, width=20, borderwidth="9", relief="groove")
         self.card.place(relx=0.5, rely=0.2, anchor="center")
 
-        flip = tk.Button(self, text="Flip Button", command=self.flip,
-                              bd=10, width=20, bg="blue", activebackground="navy")
-        flip.place(relx=0.5, rely=0.4, anchor="center")
-        Correct_card = tk.Button(self, text="Correct", command=self.correct,
-                              bd=10, bg="orange", activebackground="orangered")
-        Correct_card.place(relx=0.6, rely=0.5, anchor="center")
-        Incorrect = tk.Button(self, text="Incorrect", command=self.wrong,
-                              bd=10, bg="orange", activebackground="orangered")
-        Incorrect.place(relx=0.4, rely=0.5, anchor="center")
+        flip = tk.Button(self, text="Flip Flashcard", command=self.flip,
+                              bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
+        flip.place(relx=0.5, rely=0.45, anchor="center")
 
-        load = tk.Button(self, text="Return to Main", command=lambda: controller.show_page(Title), 
-                              bd=10, bg="orange", activebackground="orangered")
-        load.place(relx=0.25, rely=0.6, anchor="center")
+        Correct_card = tk.Button(self, text="Correct", command=self.correct,
+                              bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
+        Correct_card.place(relx=0.6, rely=0.6, anchor="center")
+        Incorrect = tk.Button(self, text="Incorrect", command=self.wrong,
+                              bd=10,background="medium blue",fg="DarkOrange2",font=MED_FONT)
+        Incorrect.place(relx=0.4, rely=0.6, anchor="center")
+
+        ret = tk.Button(self, image=self.back, command=lambda: controller.show_page(Title),bg='medium blue',bd=0,activebackground="medium blue", width=100, height=100)
+       
+        ret.place(relx=0.2, rely=0.5, anchor="center")
 
     
 
